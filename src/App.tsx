@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { Typography } from 'antd';
 import Login from './pages/Login';
+import Home from './pages/Home';
 import './App.css';
 
 const { Title } = Typography;
@@ -15,10 +16,10 @@ const GlobalTitle = styled(Title)`
 const App: FunctionComponent = () => {
   const [token, setToken] = useState<String>();
 
-  const page = (<Login setToken={setToken} />);
+  let page = (<Login setToken={setToken} />);
 
-  if (token) {
-    return (<Title level={3}>test</Title>);
+  if (!token) {
+    page = (<Home />);
   }
 
   return (

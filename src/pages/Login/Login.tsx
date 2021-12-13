@@ -1,11 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import { useQuery } from '@apollo/client';
 
 import {
   Form, Input, Button, Typography,
 } from 'antd';
-import { GET_ALL_TWEETS } from '../../api/queries';
 
 const { Title } = Typography;
 
@@ -23,10 +21,6 @@ const Login: FunctionComponent<LoginProps> = ({ setToken }) => {
   const onFinish = (values: {username: string, password: string}): void => {
     setToken(values.username);
   };
-
-  const { data } = useQuery(GET_ALL_TWEETS);
-
-  console.log(data);
 
   return (
     <Container>
