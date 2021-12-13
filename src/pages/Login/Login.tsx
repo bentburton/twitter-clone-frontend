@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 import {
   Alert, Form, Input, Button, Typography, Spin,
 } from 'antd';
-import { LOGIN } from '../../api/mutations';
+import { LOGIN, SIGN_UP } from '../../api/mutations';
 import { useToken } from '../../api/misc';
 
 const { Title } = Typography;
@@ -21,10 +21,11 @@ const LoadingIcon = styled(Spin)`
 `;
 
 interface LoginProps {
+  signUp: boolean
 }
 
-const Login: React.FC<LoginProps> = () => {
-  const [login, { data, loading }] = useMutation(LOGIN);
+const Login: React.FC<LoginProps> = ({ signUp }) => {
+  const [login, { data, loading }] = useMutation(signUp ? SIGN_UP : LOGIN);
   // eslint-disable-next-line no-unused-vars
   const { setToken } = useToken();
   const [errorText, setErrorText] = useState('');
@@ -44,6 +45,9 @@ const Login: React.FC<LoginProps> = () => {
     if (data?.loginUser?.token) {
       setToken(data?.loginUser?.token);
     }
+    if (data?.registerUser?.token) {
+      setToken(data?.registerUser?.token);
+    }
   }, [data, setToken]);
 
   if (loading) {
@@ -52,7 +56,7 @@ const Login: React.FC<LoginProps> = () => {
 
   return (
     <Container>
-      <Title>Login</Title>
+      <Title>{signUp ? 'Sign Up' : 'Login'}</Title>
       <Form
         name="basic"
         labelCol={{
@@ -106,7 +110,6 @@ const Login: React.FC<LoginProps> = () => {
       </Form>
       {errorText && (
       <Alert
-        message="Error"
         description={errorText}
         type="error"
         closable

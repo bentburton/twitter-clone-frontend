@@ -9,16 +9,12 @@ import './App.css';
 const App: React.FC = () => {
   const { token, setToken } = useToken();
 
-  let page = (<Login />);
-  if (token) {
-    page = (<Home />);
-  }
-
+  let page = (<Login signUp />);
   const buttons = [];
-
-  if (token) {
+  if (token && token !== 'undefined') {
+    page = (<Home />);
     buttons.push(
-      <Button key="1" onClick={() => setToken()}>Sign Out</Button>,
+      <Button key="1" size="large" onClick={() => setToken()}>Sign Out</Button>,
     );
   }
 

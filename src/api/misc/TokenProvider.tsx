@@ -18,8 +18,9 @@ const useTokenStorage = (): [string | null, (token: string) => void] => {
     try {
       setStateToken(value);
       window.localStorage.setItem('token', value);
+      console.log('here');
     } catch (error) {
-      console.warn('failed to save token to storage: ', error);
+      console.warn('failed to set token to storage: ', error);
     }
   };
 

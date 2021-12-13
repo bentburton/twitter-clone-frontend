@@ -61,7 +61,6 @@ const CommentModal: React.FC<CommentModalProps> = (
       />
       {errorText && (
         <ErrorAlert
-          message="Error"
           description={errorText}
           type="error"
           closable

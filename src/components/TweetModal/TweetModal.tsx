@@ -61,7 +61,6 @@ const TweetModal: React.FC<TweetModalProps> = (
       />
       {errorText && (
         <ErrorAlert
-          message="Error"
           description={errorText}
           type="error"
           closable

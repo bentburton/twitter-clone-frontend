@@ -13,12 +13,6 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const AffixContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 10px
-`;
-
 const Home: React.FC = () => {
   const { data, loading } = useQuery(GET_ALL_TWEETS);
   const [tweetModalVisible, setTweetModalVisible] = useState(false);
@@ -26,20 +20,22 @@ const Home: React.FC = () => {
   return (
     <>
       <Container>
+        <Affix offsetTop={0}>
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => setTweetModalVisible(true)}
+          >
+            Compose Tweet
+            <EditOutlined />
+          </Button>
+        </Affix>
         {loading ? (
           <LoadingTweet />
         ) : data?.tweets?.map((tweet: any) => (
           <Tweet tweet={tweet} key={tweet?.id} />
         ))}
       </Container>
-      <AffixContainer>
-        <Affix offsetBottom={20}>
-          <Button type="primary" onClick={() => setTweetModalVisible(true)}>
-            Compose Tweet
-            <EditOutlined />
-          </Button>
-        </Affix>
-      </AffixContainer>
       <TweetModal
         visible={tweetModalVisible}
         setVisible={setTweetModalVisible}
