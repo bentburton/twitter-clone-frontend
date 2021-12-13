@@ -1,30 +1,34 @@
-import React, { FunctionComponent, useState } from 'react';
-import styled from 'styled-components';
-import { Typography } from 'antd';
+import React, { FunctionComponent } from 'react';
+// import styled from 'styled-components';
+import { PageHeader, Button } from 'antd';
+import { useToken } from './api/misc';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import './App.css';
 
-const { Title } = Typography;
-
-const GlobalTitle = styled(Title)`
-  padding-top: 5px;
-  padding-left: 5px;
-`;
-
 // Main page
 const App: FunctionComponent = () => {
-  const [token, setToken] = useState<String>();
+  const { token, setToken } = useToken();
 
-  let page = (<Login setToken={setToken} />);
-
-  if (!token) {
+  let page = (<Login />);
+  if (token) {
     page = (<Home />);
+  }
+
+  const buttons = [];
+
+  if (token) {
+    buttons.push(
+      <Button key="1" onClick={() => setToken('')}>Sign Out</Button>,
+    );
   }
 
   return (
     <div>
-      <GlobalTitle level={3}>HSTwitter</GlobalTitle>
+      <PageHeader
+        title="HSTwitter"
+        extra={buttons}
+      />
       {page}
     </div>
   );

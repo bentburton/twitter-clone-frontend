@@ -24,7 +24,6 @@ const Tweet: FunctionComponent<TweetProps> = ({ tweet }) => {
     <TweetCard
       title={`@${tweet?.user?.username}${tweet?.retweet ? ' 🔁 retweeted' : ''}`}
       avatar={tweet?.user?.avatar}
-      key={tweet?.id}
     >
       {tweet?.retweet ? (
         <InnerTweetCard

@@ -18,7 +18,7 @@ const Home: FunctionComponent = () => {
       {loading ? (
         <LoadingTweet />
       ) : data?.tweets?.map((tweet: any) => (
-        <Tweet tweet={tweet} />
+        <Tweet tweet={tweet} key={tweet?.id} />
       ))}
     </Container>
   );

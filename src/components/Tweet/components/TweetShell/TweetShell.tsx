@@ -29,6 +29,7 @@ TweetShell.defaultProps = {
   type: undefined,
   loading: false,
   avatar: undefined,
+  className: undefined,
 };
 
 export default TweetShell;

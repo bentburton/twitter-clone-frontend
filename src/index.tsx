@@ -1,22 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  ApolloClient,
-  InMemoryCache,
   ApolloProvider,
 } from '@apollo/client';
+import { TokenProvider, client } from './api/misc';
 import App from './App';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:3000/ ',
-  cache: new InMemoryCache(),
-});
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <TokenProvider>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </TokenProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

@@ -1,9 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
-
+import { useMutation } from '@apollo/client';
 import {
-  Form, Input, Button, Typography,
+  Alert, Form, Input, Button, Typography, Spin,
 } from 'antd';
+import { LOGIN } from '../../api/mutations';
+import { useToken } from '../../api/misc';
 
 const { Title } = Typography;
 
@@ -11,16 +13,42 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100px;
+`;
+
+const LoadingIcon = styled(Spin)`
+  margin-top: 50px;
 `;
 
 interface LoginProps {
-  setToken: React.Dispatch<React.SetStateAction<String | undefined>>
 }
 
-const Login: FunctionComponent<LoginProps> = ({ setToken }) => {
-  const onFinish = (values: {username: string, password: string}): void => {
-    setToken(values.username);
+const Login: FunctionComponent<LoginProps> = () => {
+  const [login, { data, loading }] = useMutation(LOGIN);
+  // eslint-disable-next-line no-unused-vars
+  const { setToken } = useToken();
+  const [errorText, setErrorText] = useState('');
+
+  const onFinish = (
+    { username, password }: {username: string, password: string},
+  ): void => {
+    login(
+      {
+        variables: { input: { username, password } },
+        onError: (e) => setErrorText(e.message),
+      },
+    );
   };
+
+  useEffect(() => {
+    if (data?.loginUser?.token) {
+      setToken(data?.loginUser?.token);
+    }
+  }, [data, setToken]);
+
+  if (loading) {
+    return <Container><LoadingIcon size="large" /></Container>;
+  }
 
   return (
     <Container>
@@ -76,6 +104,15 @@ const Login: FunctionComponent<LoginProps> = ({ setToken }) => {
           </Button>
         </Form.Item>
       </Form>
+      {errorText && (
+      <Alert
+        message="Error"
+        description={errorText}
+        type="error"
+        closable
+        onClose={() => setErrorText('')}
+      />
+      )}
     </Container>
   );
 };
