@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import {
@@ -23,7 +23,7 @@ const LoadingIcon = styled(Spin)`
 interface LoginProps {
 }
 
-const Login: FunctionComponent<LoginProps> = () => {
+const Login: React.FC<LoginProps> = () => {
   const [login, { data, loading }] = useMutation(LOGIN);
   // eslint-disable-next-line no-unused-vars
   const { setToken } = useToken();

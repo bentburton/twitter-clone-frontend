@@ -1,5 +1,4 @@
-import React, { FunctionComponent } from 'react';
-// import styled from 'styled-components';
+import React from 'react';
 import { PageHeader, Button } from 'antd';
 import { useToken } from './api/misc';
 import Login from './pages/Login';
@@ -7,7 +6,7 @@ import Home from './pages/Home';
 import './App.css';
 
 // Main page
-const App: FunctionComponent = () => {
+const App: React.FC = () => {
   const { token, setToken } = useToken();
 
   let page = (<Login />);
@@ -19,7 +18,7 @@ const App: FunctionComponent = () => {
 
   if (token) {
     buttons.push(
-      <Button key="1" onClick={() => setToken('')}>Sign Out</Button>,
+      <Button key="1" onClick={() => setToken()}>Sign Out</Button>,
     );
   }
 
