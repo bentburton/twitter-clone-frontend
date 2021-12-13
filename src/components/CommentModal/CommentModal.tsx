@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, Input, Alert } from 'antd';
 import { useMutation } from '@apollo/client';
+import styled from 'styled-components';
 import { COMMENT_ON_TWEET } from '../../api/mutations';
 import { GET_ALL_TWEETS } from '../../api/queries';
 
+const ErrorAlert = styled(Alert)`
+  margin-top: 8px;
+`;
 interface CommentModalProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +38,7 @@ const CommentModal: React.FC<CommentModalProps> = (
       });
       setVisible(false);
     } else {
-      setErrorText('Error!!');
+      setErrorText('Please enter a comment');
     }
   };
 
@@ -56,8 +60,8 @@ const CommentModal: React.FC<CommentModalProps> = (
         onChange={(e) => setCommentValue(e.target.value)}
       />
       {errorText && (
-        <Alert
-          message="Error Text"
+        <ErrorAlert
+          message="Error"
           description={errorText}
           type="error"
           closable

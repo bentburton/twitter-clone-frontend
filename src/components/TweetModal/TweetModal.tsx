@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
 import { Modal, Input, Alert } from 'antd';
 import { useMutation } from '@apollo/client';
-import { COMMENT_ON_TWEET } from '../../api/mutations';
+import styled from 'styled-components';
+import { TWEET } from '../../api/mutations';
 import { GET_ALL_TWEETS } from '../../api/queries';
 
 interface TweetModalProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  tweetId: string;
 }
 
+const ErrorAlert = styled(Alert)`
+  margin-top: 8px;
+`;
+
 const TweetModal: React.FC<TweetModalProps> = (
-  { visible, setVisible, tweetId },
+  { visible, setVisible },
 ) => {
-  const [commentValue, setCommentValue] = useState('');
+  const [tweetValue, setTweetValue] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  const [comment, { loading }] = useMutation(COMMENT_ON_TWEET);
+  const [comment, { loading }] = useMutation(TWEET);
 
   const handleOk = async (): Promise<any> => {
-    if (commentValue) {
+    if (tweetValue) {
       await comment({
         variables: {
           input: {
-            id: tweetId,
-            body: commentValue,
+            body: tweetValue,
           },
         },
         onError: () => {
-          setErrorText('There was an error uploading the comment');
+          setErrorText('There was an error uploading the tweet');
         },
         refetchQueries: [{ query: GET_ALL_TWEETS }],
       });
       setVisible(false);
     } else {
-      setErrorText('Error!!');
+      setErrorText('Please enter a tweet');
     }
   };
 
@@ -50,14 +53,15 @@ const TweetModal: React.FC<TweetModalProps> = (
       confirmLoading={loading}
       onCancel={handleCancel}
     >
-      <Input
-        placeholder="This is my comment..."
-        value={commentValue}
-        onChange={(e) => setCommentValue(e.target.value)}
+      <Input.TextArea
+        placeholder="This is my tweet..."
+        value={tweetValue}
+        onChange={(e) => setTweetValue(e.target.value)}
+        rows={2}
       />
       {errorText && (
-        <Alert
-          message="Error Text"
+        <ErrorAlert
+          message="Error"
           description={errorText}
           type="error"
           closable

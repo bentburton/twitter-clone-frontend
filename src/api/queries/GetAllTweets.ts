@@ -24,6 +24,7 @@ query GetAllTweets {
         ...UserInfo
       }
       retweet {
+        id
         createdAt
         body
         user {

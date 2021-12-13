@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Avatar, Collapse, List, Button,
+  Avatar, Collapse, List,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import CommentModal from '../../../CommentModal';
 
 const { Panel } = Collapse;
 
@@ -18,10 +16,6 @@ const CommentDropdown = styled(Collapse)`
   width: 100%;
 `;
 
-const NewCommentButton = styled(Button)`
-  margin-left: 8px;
-`;
-
 interface User {
   username: string;
   avatar: string;
@@ -30,50 +24,33 @@ interface User {
 interface TweetContentProps {
   body: string;
   comments: { body: string, user: User }[];
-  tweetId: string;
 }
 
 const TweetContent: React.FC<TweetContentProps> = (
-  { body, comments, tweetId },
-) => {
-  const [commentModalVisible, setCommentModalVisible] = useState(false);
-
-  return (
-    <>
-      <p>{body}</p>
-      <CommentContainer>
-        <CommentDropdown>
-          <Panel header="Comments" key="1">
-            <List
-              itemLayout="horizontal"
-              dataSource={comments}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={<Avatar src={item?.user?.avatar} />}
-                    title={item?.body}
-                    description={`@${item?.user?.username}`}
-                  />
-                </List.Item>
-              )}
-            />
-          </Panel>
-        </CommentDropdown>
-        <NewCommentButton
-          size="large"
-          icon={<PlusOutlined />}
-          onClick={() => {
-            setCommentModalVisible(true);
-          }}
-        />
-      </CommentContainer>
-      <CommentModal
-        visible={commentModalVisible}
-        setVisible={setCommentModalVisible}
-        tweetId={tweetId}
-      />
-    </>
-  );
-};
+  { body, comments },
+) => (
+  <>
+    <p>{body}</p>
+    <CommentContainer>
+      <CommentDropdown>
+        <Panel header="Comments" key="1">
+          <List
+            itemLayout="horizontal"
+            dataSource={comments}
+            renderItem={(item) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item?.user?.avatar} />}
+                  title={item?.body}
+                  description={`@${item?.user?.username}`}
+                />
+              </List.Item>
+            )}
+          />
+        </Panel>
+      </CommentDropdown>
+    </CommentContainer>
+  </>
+);
 
 export default TweetContent;

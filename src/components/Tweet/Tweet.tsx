@@ -22,23 +22,25 @@ const Tweet: React.FC<TweetProps> = ({ tweet }) => (
   <TweetCard
     title={`@${tweet?.user?.username}${tweet?.retweet ? ' 🔁 retweeted' : ''}`}
     avatar={tweet?.user?.avatar}
+    isRetweet={tweet?.retweet}
+    tweetId={tweet?.id}
   >
     {tweet?.retweet ? (
       <InnerTweetCard
         title={`@${tweet?.retweet?.user?.username}`}
         avatar={tweet?.retweet?.user?.avatar}
+        type="inner"
+        tweetId={tweet?.retweet?.id}
       >
         <TweetContent
           body={tweet?.retweet?.body}
           comments={tweet?.retweet?.comments}
-          tweetId={tweet?.retweet?.id}
         />
       </InnerTweetCard>
     ) : (
       <TweetContent
         body={tweet?.body}
         comments={tweet?.comments}
-        tweetId={tweet?.id}
       />
     )}
   </TweetCard>
