@@ -4,8 +4,13 @@ import styled from 'styled-components';
 import TweetShell from './components/TweetShell';
 import TweetContent from './components/TweetContent';
 
-const TweetCard = styled(TweetShell)` 
-  width: 350px;
+const TweetCard = styled(TweetShell)`
+  @media (min-width: 768px) {
+    width: 80%;
+  }
+  @media (min-width: 1024px) {
+    width: 768px;
+  }
   margin-top: 16px;
 `;
 

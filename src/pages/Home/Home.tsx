@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
-import { Affix, Button } from 'antd';
+import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { GET_ALL_TWEETS } from '../../api/queries';
 import Tweet, { LoadingTweet } from '../../components/Tweet';
@@ -20,16 +20,14 @@ const Home: React.FC = () => {
   return (
     <>
       <Container>
-        <Affix offsetTop={0}>
-          <Button
-            type="primary"
-            size="large"
-            onClick={() => setTweetModalVisible(true)}
-          >
-            Compose Tweet
-            <EditOutlined />
-          </Button>
-        </Affix>
+        <Button
+          type="default"
+          size="large"
+          onClick={() => setTweetModalVisible(true)}
+        >
+          Compose Tweet
+          <EditOutlined />
+        </Button>
         {loading ? (
           <LoadingTweet />
         ) : data?.tweets?.map((tweet: any) => (
