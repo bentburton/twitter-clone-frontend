@@ -25,8 +25,8 @@ interface TweetShellProps {
   tweetId?: string;
 }
 
-const RetweetButton = styled(Button)`
-  margin-left: 8px;
+const ActionButton = styled(Button)`
+  margin: 8px;
 `;
 
 const ErrorAlert = styled(Alert)`
@@ -54,7 +54,7 @@ const TweetShell: React.FC<TweetShellProps> = (
 
   if (!isRetweet && tweetId) {
     actions.push([
-      <Button
+      <ActionButton
         size="middle"
         icon={<MessageOutlined />}
         onClick={() => {
@@ -63,8 +63,8 @@ const TweetShell: React.FC<TweetShellProps> = (
         key="comment"
       >
         Add comment
-      </Button>,
-      <RetweetButton
+      </ActionButton>,
+      <ActionButton
         size="middle"
         icon={retweetLoading ? <LoadingOutlined /> : <RetweetOutlined />}
         onClick={() => {
@@ -73,7 +73,7 @@ const TweetShell: React.FC<TweetShellProps> = (
         key="retweet"
       >
         Retweet
-      </RetweetButton>,
+      </ActionButton>,
     ]);
   }
 

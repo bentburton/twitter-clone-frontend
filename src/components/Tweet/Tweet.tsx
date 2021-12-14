@@ -5,8 +5,11 @@ import TweetShell from './components/TweetShell';
 import TweetContent from './components/TweetContent';
 
 const TweetCard = styled(TweetShell)`
+  @media (min-width: 0px) {
+    width: 350px;
+  }
   @media (min-width: 768px) {
-    width: 80%;
+    width: 500px;
   }
   @media (min-width: 1024px) {
     width: 768px;
