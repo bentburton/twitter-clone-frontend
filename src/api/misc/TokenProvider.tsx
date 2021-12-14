@@ -9,7 +9,9 @@ const useTokenStorage = (): [string | null, (token: string) => void] => {
       const item = window.localStorage.getItem('token');
       return item;
     } catch (error) {
-      console.warn('failed to retrieve token from storage: ', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('failed to retrieve token from storage: ', error);
+      }
       return '';
     }
   });
@@ -19,7 +21,9 @@ const useTokenStorage = (): [string | null, (token: string) => void] => {
       setStateToken(value);
       window.localStorage.setItem('token', value);
     } catch (error) {
-      console.warn('failed to set token to storage: ', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('failed to set token to storage: ', error);
+      }
     }
   };
 
